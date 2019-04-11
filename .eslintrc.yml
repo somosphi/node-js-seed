@@ -1,0 +1,14 @@
+extends: airbnb-base
+plugins:
+  - import
+rules:
+  arrow-body-style: 0
+  no-underscore-dangle: 0
+  class-methods-use-this: 0
+  camelcase: 0
+env:
+  mocha: true
+globals:
+  __: true
+  expect: true
+  sinon: true

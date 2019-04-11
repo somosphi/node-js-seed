@@ -1,0 +1,5 @@
+apps:
+  - script   : 'src/index.js'
+    name     : 'serviceName'
+    exec_mode: 'cluster'
+    instances: 1

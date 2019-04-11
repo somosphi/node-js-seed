@@ -1,0 +1,48 @@
+build-production:
+  stage: build
+  image: payly/docker-gitlab-ci:latest
+  services:
+    - docker:dind
+  before_script:
+    # Database
+    - echo "DB_HOST=${PRODUCTION_DB_HOST}" >> .env
+    - echo "DB_PORT=${PRODUCTION_DB_PORT}" >> .env
+    - echo "DB_POOL_MIN=${PRODUCTION_DB_POOL_MIN}" >> .env
+    - echo "DB_POOL_MAX=${PRODUCTION_DB_POOL_MAX}" >> .env
+    - echo "DB_DATABASE=${PRODUCTION_DB_DATABASE}" >> .env
+    - echo "DB_USERNAME=${PRODUCTION_DB_USERNAME}" >> .env
+    - echo "DB_PASSWORD=${PRODUCTION_DB_PASSWORD}" >> .env
+    # Application
+    - echo "PORT=3000" >> .env
+    - echo "NODE_ENV=production" >> .env
+    - echo "SERVICE_URL=${RANCHER_SERVICE}.${RANCHER_STACK}" >> .env
+    - echo "SERVICE_NAME=${RANCHER_SERVICE}" >> .env
+    - echo "AUTHORIZATION_SERVER=${AUTHORIZATION_SERVER}" >> .env
+    - echo "EUREKA_HOST=${EUREKA_HOST}" >> .env
+    - echo "EUREKA_PORT=${EUREKA_PORT}" >> .env
+    - echo "APM_URL=${APM_URL}" >> .env
+    - echo "APM_TOKEN=${APM_TOKEN}" >> .env
+    # Settings
+  script:
+    - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+    - docker build -t $IMAGE_REPOSITORY .
+    - docker push $IMAGE_REPOSITORY
+  after_script:
+    - rm .env
+  only:
+    - master
+
+deploy-production:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - upgrade
+      --no-finish-upgrade
+      --stack $RANCHER_STACK
+      --service $RANCHER_SERVICE
+      --new-image $IMAGE_REPOSITORY
+      --environment $RANCHER_ENVIRONMENT_PRODUCTION
+  only:
+    - master

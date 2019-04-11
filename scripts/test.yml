@@ -1,0 +1,52 @@
+variables:
+  DB_DATABASE_DEVELOPMENT: pipe_${CI_PIPELINE_ID}
+  MYSQL_ROOT_PASSWORD: root_${CI_PIPELINE_ID}
+
+integration:
+  stage: test
+  image: payly/node-gitlab-ci:latest
+  services:
+    - name: mysql:8
+      alias: mysql
+  variables:
+    DB_HOST: mysql
+    DB_PORT: 3306
+    DB_POOL_MIN: 1
+    DB_POOL_MAX: 3
+    DB_DATABASE: $DB_DATABASE_DEVELOPMENT
+    DB_USERNAME: root
+    DB_PASSWORD: $MYSQL_ROOT_PASSWORD
+  before_script:
+    - mysql
+      -u"root"
+      -p"$MYSQL_ROOT_PASSWORD"
+      -h"mysql"
+      -P"3306"
+      -e"CREATE DATABASE $DB_DATABASE_DEVELOPMENT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+  script:
+    - npm install
+    - npm run migration:up
+    - npm run seed
+    - npm run test:integration
+  after_script:
+    - mysql
+      -u"root"
+      -p"$MYSQL_ROOT_PASSWORD"
+      -h"mysql"
+      -P"3306"
+      -e"DROP SCHEMA $DB_DATABASE_DEVELOPMENT"
+  only:
+    - develop
+    - merge_requests
+
+unit:
+  stage: test
+  image: node:10-alpine
+  script:
+    - npm install
+    - npm run test:unit
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  only:
+    - master
+    - develop
+    - merge_requests

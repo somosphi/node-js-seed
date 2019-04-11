@@ -1,0 +1,4 @@
+{
+  "ignore": ["scripts/*", ".vscode/*"],
+  "watch": ["src/*"]
+}
