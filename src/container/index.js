@@ -4,10 +4,7 @@ const knex = require('knex');
 const knexFile = require('../../knexfile');
 
 /** Models */
-const BillPaymentModel = require('./models/BillPaymentModel');
 const EntityModel = require('./models/EntityModel');
-const BillPaymentHistoryModel = require('./models/BillPaymentHistoryModel');
-const PostbackModel = require('./models/PostbackModel');
 
 /** Integrations */
 const Placeholder = require('./integrations/Placeholder');
@@ -33,18 +30,12 @@ database.migrate.latest();
 /**
  * @typedef ModelContainer
  * @type {Object}
- * @property {BillPaymentModel} billPaymentModel
  * @property {EntityModel} entityModel
- * @property {BillPaymentHistoryModel} billPaymentHistoryModel
- * @property {PostbackModel} postbackModel
  */
 
 /** @type {ModelContainer} */
 const models = {
-  billPaymentModel: new BillPaymentModel(database),
   entityModel: new EntityModel(database),
-  billPaymentHistoryModel: new BillPaymentHistoryModel(database),
-  postbackModel: new PostbackModel(database),
 };
 
 /**

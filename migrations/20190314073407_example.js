@@ -20,8 +20,8 @@ const up = async (knex) => {
     table.bigIncrements('id').unsigned();
     table.string('description', 10000).notNullable();
     table.enum('type', ['CHECKING_ACCOUNT', 'SAVINGS_ACCOUNT']).notNullable();
-    table.integer('account').notNullable();
-    table.integer('agency').notNullable();
+    table.specificType('account', 'INTEGER(10)').notNullable().unsigned();
+    table.specificType('agency', 'INTEGER(4) ZEROFILL').notNullable().unsigned();
     table.bigInteger('balance')
       .unsigned()
       .notNullable()
@@ -55,7 +55,7 @@ const up = async (knex) => {
 
   await knex.schema.createTable('event', (table) => {
     table.bigIncrements('id').unsigned();
-    table.string('name').notNullable();
+    table.string('name', 100).notNullable();
     table.string('description', 400).notNullable();
     table.enum('type', ['CREDIT', 'DEBIT', 'BALANCE']).notNullable();
     table.unique(['name']);
@@ -67,14 +67,12 @@ const up = async (knex) => {
 
   await knex.schema.createTable('transaction', (table) => {
     table.bigIncrements('id').unsigned();
-    table.uuid('code').notNullable();
     table.string('description', 10000).notNullable();
     table.bigInteger('eventId').notNullable().unsigned();
     table.bigInteger('walletId').notNullable().unsigned();
     table.bigInteger('value').notNullable().unsigned();
     table.enum('type', ['CREDIT', 'DEBIT', 'BALANCE']).notNullable();
     table.enum('status', ['PENDING', 'CONFIRMED', 'CANCELLED']).notNullable();
-    table.unique(['code']);
     table.foreign('eventId').references('event.id');
     table.foreign('walletId').references('wallet.id');
     table.dateTime('processed').nullable();
@@ -85,26 +83,7 @@ const up = async (knex) => {
     knexHelper.addUpdatedAt(knex, table, { fieldName: 'updatedAtLocal', convert: true });
   });
 
-  await knex.schema.createTable('fee', (table) => {
-    table.bigIncrements('id').unsigned();
-    table.string('description', 500).notNullable();
-    table.bigInteger('eventId').notNullable().unsigned();
-    table.bigInteger('walletId').notNullable().unsigned();
-    table.bigInteger('value').notNullable().unsigned();
-    table.enum('type', ['CREDIT', 'DEBIT', 'BALANCE']).notNullable();
-    table.enum('status', ['PENDING', 'CONFIRMED', 'CANCELLED']).notNullable();
-    table.unique(['code']);
-    table.foreign('eventId').references('event.id');
-    table.foreign('walletId').references('wallet.id');
-    table.dateTime('processed').nullable();
-    table.dateTime('processedAtLocal').nullable();
-    knexHelper.addCreatedAt(knex, table);
-    knexHelper.addCreatedAt(knex, table, { fieldName: 'createdAtLocal', convert: true });
-    knexHelper.addUpdatedAt(knex, table);
-    knexHelper.addUpdatedAt(knex, table, { fieldName: 'updatedAtLocal', convert: true });
-  });
-
-  await knex.insert([
+  await knex('event').insert([
     {
       name: 'BALANCE',
       type: 'BALANCE',
@@ -126,7 +105,7 @@ const up = async (knex) => {
       type: 'DEBIT',
       description: 'Taxa de transferência eletrônica enviada',
     },
-  ]).from('event');
+  ]);
 };
 
 /**

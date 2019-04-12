@@ -8,7 +8,7 @@ const { NotFoundError } = require('../errors');
 const { NODE_ENV } = require('../env');
 
 /* Routes */
-const billPaymentRoute = require('./routes/billPaymentRoute');
+const walletRoute = require('./routes/walletRoute');
 
 /* Middlewares */
 const auth = require('./middlewares/auth');
@@ -40,7 +40,7 @@ if (NODE_ENV === 'production') {
 }
 
 /* Instatiate routes */
-app.use('/bill-payments', billPaymentRoute);
+app.use('/bill-payments', walletRoute);
 
 app.all('*', (req, res, next) => {
   next(new NotFoundError(res.__('error.notFound')));
