@@ -2,6 +2,14 @@ const Model = require('./Model');
 const { documentTypes } = require('../../enums');
 
 /**
+ * @typedef CreateEntity
+ * @type {Object}
+ * @property {String} name
+ * @property {String} documentNumber
+ * @property {String} documentType
+ */
+
+/**
  * @typedef Entity
  * @type {Object}
  * @property {Number} id
@@ -23,7 +31,12 @@ class EntityModel extends Model {
    * @return {import('./Model').ResultTransaction<Entity>}
    */
   getById(id) {
-    return this.table.where('id', id).first();
+    return this.table.where('id', id).first([
+      'id',
+      'name',
+      'documentNumber',
+      'documentType',
+    ]);
   }
 
   /**
@@ -31,37 +44,27 @@ class EntityModel extends Model {
    * @param {String} documentNumber
    * @return {import('./Model').ResultTransaction<Entity>}
    */
-  get(name, documentNumber) {
+  get(where) {
     return this.table
-      .where('name', name)
-      .where('documentNumber', documentNumber)
-      .first();
+      .where(where)
+      .first([
+        'id',
+        'name',
+        'documentNumber',
+        'documentType',
+      ]);
   }
 
   /**
-   * @param {String} name
-   * @param {String} documentNumber
+   * @param {CreateEntity} data
    * @return {import('./Model').ResultTransaction<Number[]>}
    */
-  create(name, documentNumber) {
-    let documentType = null;
-    switch (documentNumber.length) {
-      case 11:
-        documentType = documentTypes.CPF;
-        break;
-      case 14:
-        documentType = documentTypes.CNPJ;
-        break;
-      default:
-        documentType = null;
-        break;
-    }
-
+  create({ name, documentNumber, documentType }) {
     return this.table.insert({
       name,
       documentNumber,
       documentType,
-    });
+    }).returning('id');
   }
 }
 
