@@ -5,12 +5,16 @@ const knexFile = require('../../knexfile');
 
 /** Models */
 const EntityModel = require('./models/EntityModel');
+const WalletModel = require('./models/WalletModel');
+const TransactionModel = require('./models/TransactionModel');
 
 /** Integrations */
 const Placeholder = require('./integrations/Placeholder');
 
 /** Services */
-const UserService = require('./services/UserService');
+const EntityService = require('./services/EntityService');
+const WalletService = require('./services/WalletService');
+const TransactionService = require('./services/TransactionService');
 
 const database = knex(knexFile);
 if (NODE_ENV === 'development') {
@@ -25,7 +29,9 @@ if (NODE_ENV === 'development') {
   });
 }
 
-database.migrate.latest();
+if (NODE_ENV === 'production') {
+  database.migrate.latest();
+}
 
 /**
  * @typedef ModelContainer
@@ -36,6 +42,8 @@ database.migrate.latest();
 /** @type {ModelContainer} */
 const models = {
   entityModel: new EntityModel(database),
+  walletModel: new WalletModel(database),
+  transactionModel: new TransactionModel(database),
 };
 
 /**
@@ -66,7 +74,9 @@ const serviceContext = {
 
 /** @type {ServiceContainer} */
 const services = {
-  userService: new UserService(serviceContext),
+  entityService: new EntityService(serviceContext),
+  walletService: new WalletService(serviceContext),
+  transactionService: new TransactionService(serviceContext),
 };
 
 /**

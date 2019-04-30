@@ -1,4 +1,4 @@
-class UserService {
+class TransactionService {
   /**
    * @param {import('../index').ServiceContext} container
    */
@@ -7,4 +7,4 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+module.exports = TransactionService;

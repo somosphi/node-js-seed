@@ -36,6 +36,12 @@ class ResourceNotFoundError extends CodedError {
   }
 }
 
+class ResourceDuplicatedError extends CodedError {
+  constructor(message) {
+    super('RESOURCE_DUPLICATED', message);
+  }
+}
+
 class ValidationError extends DetailedCodedError {
   constructor(message, details) {
     super('VALIDATION_FAILED', message, details);
@@ -53,4 +59,5 @@ module.exports = {
   ValidationError,
   ResourceNotFoundError,
   UnavailableServiceError,
+  ResourceDuplicatedError,
 };

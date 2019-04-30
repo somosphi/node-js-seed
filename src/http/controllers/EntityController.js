@@ -6,9 +6,9 @@ const {
 /**
  * @param {import('../../container').Container} container
  */
-class WalletController {
+class EntityController {
   constructor(container) {
-    // this.a = container.
+    this.entityService = container.entityService;
   }
 
   /**
@@ -18,12 +18,13 @@ class WalletController {
    * @param {import('express').Response} res
    * @param {import('express').NextFunction} next
    */
-  async create (req, res, next) {
+  async create(req, res, next) {
     try {
       const { body } = req;
-      const billPayment = await this.billPaymentService.create(body);
+      const entityId = await this.entityService.create(body);
+      const entity = await this.entityService.get({ id: entityId });
 
-      res.send(formatRecord(billPayment));
+      res.send(entity);
     } catch (err) {
       if (err instanceof ResourceDuplicatedError) {
         err.message = req.__('error.resourceDuplicatedError');
@@ -39,7 +40,7 @@ class WalletController {
    * @param {import('express').Response} res
    * @param {import('express').NextFunction} next
    */
-  async get (req, res, next) {
+  async get(req, res, next) {
     try {
       const { params } = req;
       const entity = await this.entityService.get({ id: params.entityId });
@@ -54,5 +55,4 @@ class WalletController {
   }
 }
 
-
-module.exports = WalletController;
+module.exports = EntityController;

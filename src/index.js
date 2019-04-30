@@ -1,19 +1,28 @@
 const env = require('./env');
-const apm = require('elastic-apm-node');
+require('./apmRegister');
 
-if (env.APM_TOKEN && env.APM_URL) {
-  apm.start({
-    serviceName: env.SERVICE_URL,
-    secretToken: env.APM_TOKEN,
-    serverUrl: env.APM_URL,
-  });
-}
+process.stdin.resume();
 
 const http = require('./http');
 const worker = require('./worker');
 const logger = require('./logger');
 const eurekaRegister = require('./eurekaRegister');
 
+function exit() {
+  http.close(() => {
+    process.exit(0);
+  });
+}
+
+/* process handler */
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('SIGINT', exit);
+process.on('SIGTERM', exit);
+
+/* start service */
 setImmediate(() => {
   worker.startAll();
   logger.info(__('worker.started', worker.crons.length));
