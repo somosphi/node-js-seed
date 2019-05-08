@@ -13,7 +13,7 @@ module.exports = () => new Promise((resolve, reject) => {
       vipAddress: env.SERVICE_NAME,
       port: {
         $: env.PORT,
-        '@enabled': 'true', 
+        '@enabled': 'true',
       },
       dataCenterInfo: {
         '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',

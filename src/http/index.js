@@ -5,13 +5,11 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const i18n = require('../i18n');
 const { NotFoundError } = require('../errors');
-const { NODE_ENV } = require('../env');
 
 /* Routes */
-const walletRoute = require('./routes/walletRoute');
+const entityRoute = require('./routes/entityRoute');
 
 /* Middlewares */
-const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 
 /* Express initialization */
@@ -35,12 +33,8 @@ app.get(['/info', '/status'], async (req, res, next) => {
   }
 });
 
-if (NODE_ENV === 'production') {
-  // app.use(auth(['ADMIN']));
-}
-
 /* Instatiate routes */
-app.use('/bill-payments', walletRoute);
+app.use('/entity', entityRoute);
 
 app.all('*', (req, res, next) => {
   next(new NotFoundError(res.__('error.notFound')));

@@ -13,6 +13,7 @@ setImmediate(() => {
 
   const server = http.listen(env.PORT, () => {
     logger.info(__('http.started', env.PORT));
+    process.send('ready');
 
     if (env.NODE_ENV === 'production') {
       eurekaRegister()
