@@ -6,7 +6,7 @@ const {
 } = winston.format;
 
 /**
- * @param {Error} err
+ * @param {*} err
  * @return {String}
  */
 const getErrorMessage = (err) => {

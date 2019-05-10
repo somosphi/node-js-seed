@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('../../helpers/Joi');
 
 const id = Joi.number().positive();
 
@@ -8,10 +8,7 @@ exports.create = Joi.object({
       .trim()
       .uppercase()
       .required(),
-    documentNumber: Joi.string()
-      .min(11)
-      .max(14)
-      .regex(/^\d+$/)
+    documentNumber: Joi.document()
       .required(),
     documentType: Joi.string()
       .allow('CPF', 'CNPJ')
