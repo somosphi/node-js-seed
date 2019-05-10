@@ -31,13 +31,12 @@ const getErrorConfig = error => errorsConfigs
 
 /**
  * @param {import('express').Request} req
- * @param {Error} error
+ * @param {CodedError} error
  */
 const loadErrorMessage = (req, error) => {
   const errorConfig = getErrorConfig(error);
   if (errorConfig) {
-    const errorWithMessage = error;
-    errorWithMessage.message = req.__(errorConfig.i18n);
+    error.setMessage(req.__(errorConfig.i18n));
   }
 };
 
