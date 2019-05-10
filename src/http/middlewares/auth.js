@@ -6,4 +6,3 @@ const Security = MiddlewareSecurity({
 });
 
 module.exports = roles => (new Security()).hasAnyRole(roles).authenticate();
-

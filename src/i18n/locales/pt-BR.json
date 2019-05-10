@@ -1,6 +1,6 @@
 {
-  "http.started": "Http iniciado na porta %s",
-  "knex.migrate": "Iniciado migração do knex",
+	"http.started": "Http iniciado na porta %s",
+	"knex.migrate": "Iniciado migração do knex",
 	"eureka.started": "Eureka iniciado",
 	"eureka.error": "Eureka falha: %s",
 	"worker.started": "Worker iniciado com %s crons",
@@ -8,5 +8,5 @@
 	"error.resourceNotFound": "Recurso não encontrado",
 	"error.unexpected": "Falha interna do servidor",
 	"error.validation": "Dados inválidos",
-	"error.unavailableService": "Serviço indisponível"
+	"error.duplicatedResource": "Já existe um recurso cadastrado com as chaves únicas fornecidas"
 }

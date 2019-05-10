@@ -1,63 +1,75 @@
 class CodedError extends Error {
-  constructor(code, message = null) {
-    super(message || code);
+  /**
+   * @param {String} code
+   */
+  constructor(code) {
+    super();
     this.code = code;
   }
+
+  /**
+   * @param {String} message
+   */
+  setMessage(message) {
+    this.message = message;
+    return this;
+  }
+
   toJSON() {
     return {
-      message: this.message,
-      code: this.code,
+      message: this.message || null,
+      code: this.code || null,
     };
   }
 }
 
 class DetailedCodedError extends CodedError {
-  constructor(code, message, details) {
-    super(code, message);
+  /**
+   * @param {*} details
+   */
+  setDetails(details) {
     this.details = details;
+    return this;
   }
+
   toJSON() {
     return {
       ...super.toJSON(),
-      details: this.details,
+      details: this.details || null,
     };
   }
 }
 
 class NotFoundError extends CodedError {
-  constructor(message) {
-    super('NOT_FOUND', message);
+  constructor() {
+    super('NOT_FOUND');
   }
 }
 
 class ResourceNotFoundError extends CodedError {
-  constructor(message) {
-    super('RESOURCE_NOT_FOUND', message);
+  constructor() {
+    super('RESOURCE_NOT_FOUND');
   }
 }
 
 class ResourceDuplicatedError extends CodedError {
-  constructor(message) {
-    super('RESOURCE_DUPLICATED', message);
+  constructor() {
+    super('RESOURCE_DUPLICATED');
   }
 }
 
 class ValidationError extends DetailedCodedError {
-  constructor(message, details) {
-    super('VALIDATION_FAILED', message, details);
-  }
-}
-
-class UnavailableServiceError extends DetailedCodedError {
-  constructor(message, details) {
-    super('UNAVAILABLE_SERVICE', message, details);
+  constructor(details) {
+    super('VALIDATION_FAILED');
+    this.setDetails(details);
   }
 }
 
 module.exports = {
+  CodedError,
+  DetailedCodedError,
   NotFoundError,
-  ValidationError,
   ResourceNotFoundError,
-  UnavailableServiceError,
   ResourceDuplicatedError,
+  ValidationError,
 };

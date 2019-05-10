@@ -1,6 +1,4 @@
-const Joi = require('../../helpers/Joi');
-
-const id = Joi.number().positive();
+const Joi = require('@hapi/joi');
 
 exports.create = Joi.object({
   body: Joi.object({
@@ -8,16 +6,15 @@ exports.create = Joi.object({
       .trim()
       .uppercase()
       .required(),
-    documentNumber: Joi.document()
-      .required(),
+    documentNumber: Joi.string().required(),
     documentType: Joi.string()
       .allow('CPF', 'CNPJ')
       .required(),
   }).required(),
 });
 
-exports.get = Joi.object({
+exports.findById = Joi.object({
   params: Joi.object({
-    entityId: id.required(),
+    id: Joi.number().positive().required(),
   }),
 });

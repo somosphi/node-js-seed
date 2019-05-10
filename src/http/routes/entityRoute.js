@@ -1,23 +1,20 @@
 const express = require('express');
 const entitySchema = require('../schemas/entitySchema');
 const schemaValidator = require('../middlewares/schemaValidator');
-const EntityController = require('../controllers/EntityController');
-const container = require('../../container');
-
-const entityController = new EntityController(container);
+const entityController = require('../controllers/entityController');
 
 const router = express.Router({ mergeParams: true });
 
 router.post(
   '/',
   schemaValidator(entitySchema.create),
-  entityController.create.bind(entityController),
+  entityController.create,
 );
 
 router.get(
-  '/:entityId',
-  schemaValidator(entitySchema.get),
-  entityController.get.bind(entityController),
+  '/:id',
+  schemaValidator(entitySchema.findById),
+  entityController.findById,
 );
 
 module.exports = router;

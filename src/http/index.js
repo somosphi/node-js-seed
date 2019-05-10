@@ -37,7 +37,7 @@ app.get(['/info', '/status'], async (req, res, next) => {
 app.use('/entity', entityRoute);
 
 app.all('*', (req, res, next) => {
-  next(new NotFoundError(res.__('error.notFound')));
+  next(new NotFoundError());
 });
 
 app.use(errorHandler);

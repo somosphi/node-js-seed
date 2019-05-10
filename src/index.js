@@ -39,7 +39,8 @@ setImmediate(() => {
   worker.startAll();
   logger.info(__('worker.started', worker.crons.length));
 
-  const canStartApm = env.APM_TOKEN && env.APM_URL && env.SERVICE_URL;
+  const canStartApm = !!(env.APM_TOKEN && env.APM_URL && env.SERVICE_URL);
+
   if (canStartApm) {
     apm.start({
       serviceName: env.SERVICE_URL,

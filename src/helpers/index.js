@@ -1,7 +1,4 @@
-const KnexHelper = require('./KnexHelper');
-const StringHelper = require('./StringHelper');
+const knexHelper = require('./knexHelper');
+const stringHelper = require('./stringHelper');
 
-module.exports = {
-  knexHelper: new KnexHelper(),
-  stringHelper: new StringHelper(),
-};
+module.exports = { knexHelper, stringHelper };

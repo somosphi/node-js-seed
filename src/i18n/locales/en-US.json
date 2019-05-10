@@ -8,5 +8,5 @@
   "error.resourceNotFound": "Resource not found",
   "error.unexpected": "Internal server failure",
   "error.validation": "Invalid request data",
-  "error.unavailableService": "Unavailable service"
+  "error.duplicatedResource": "Already exists resource with received unique keys"
 }
