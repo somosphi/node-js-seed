@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi');
+const Joi = require('joi');
 
 exports.create = Joi.object({
   body: Joi.object({
@@ -6,9 +6,7 @@ exports.create = Joi.object({
       .trim()
       .uppercase()
       .required(),
-    documentNumber: Joi.string().required(),
-    documentType: Joi.string()
-      .allow('CPF', 'CNPJ')
+    email: Joi.string().email().lowercase().trim()
       .required(),
   }).required(),
 });
