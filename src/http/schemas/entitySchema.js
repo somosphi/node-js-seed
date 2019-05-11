@@ -18,3 +18,5 @@ exports.findById = Joi.object({
     id: Joi.number().positive().required(),
   }),
 });
+
+exports.getAll = Joi.object();

@@ -1,9 +1,23 @@
-const container = require('../container');
-const CronManager = require('./CronManager');
+const crons = require('./crons');
 
-/** Crons */
-// const ExecutePostbackCron = require('./crons/ExecutePostbackCron');
+exports.crons = crons;
 
-module.exports = new CronManager([
-  // new ExecutePostbackCron(container),
-]);
+/**
+ * @return {void}
+ */
+const start = () => {
+  crons.filter(cron => !cron.running).forEach(cron => cron.start());
+};
+
+exports.start = start;
+
+/**
+ * @return {void}
+ */
+const stop = () => {
+  crons
+    .filter(cron => cron.running)
+    .forEach(cron => cron.stop());
+};
+
+exports.stop = stop;

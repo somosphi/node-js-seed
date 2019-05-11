@@ -1,10 +1,12 @@
 const httpIntegration = require('./httpIntegration');
 const { PLACEHOLDER_URL } = require('../../env');
 
-const placeholderIntegration = httpIntegration({
+const instance = httpIntegration({
   baseURL: PLACEHOLDER_URL,
   timeout: 10000,
 });
+
+exports.instance = instance;
 
 /**
  * @typedef UserResponse
@@ -30,12 +32,11 @@ const placeholderIntegration = httpIntegration({
  */
 
 /**
- * @param {String} id
- * @return {Promise<UserResponse?>}
+ * @return {Promise<UserResponse[]>}
  */
-const getUserById = async (id) => {
+const getUsers = async () => {
   try {
-    const response = await placeholderIntegration.get(`/users/${id}`);
+    const response = await instance.get('/users');
     return response.data;
   } catch (err) {
     if (err.response && err.response === 404) {
@@ -45,4 +46,4 @@ const getUserById = async (id) => {
   }
 };
 
-exports.getUserById = getUserById;
+exports.getUsers = getUsers;

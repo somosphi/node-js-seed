@@ -6,10 +6,8 @@ const { knexHelper } = require('../src/helpers');
 const up = async (knex) => {
   await knex.schema.createTable('entities', (table) => {
     table.bigIncrements('id').unsigned();
-    table.string('name', 350).notNullable();
-    table.specificType('documentNumber', 'CHAR(14)').notNullable();
-    table.enum('documentType', ['CPF', 'CNPJ']).notNullable();
-    table.unique(['documentNumber', 'documentType']);
+    table.string('name', 100).notNullable();
+    table.string('email', 100).notNullable().unique();
     knexHelper.addCreatedAt(knex, table);
     knexHelper.addUpdatedAt(knex, table);
   });

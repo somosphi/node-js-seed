@@ -12,6 +12,12 @@ router.post(
 );
 
 router.get(
+  '/',
+  schemaValidator(entitySchema.getAll),
+  entityController.getAll,
+);
+
+router.get(
   '/:id',
   schemaValidator(entitySchema.findById),
   entityController.findById,

@@ -7,7 +7,7 @@ const i18n = require('../i18n');
 const { NotFoundError } = require('../errors');
 
 /* Routes */
-const entityRoute = require('./routes/entityRoute');
+const entitiesRoute = require('./routes/entitiesRoute');
 
 /* Middlewares */
 const errorHandler = require('./middlewares/errorHandler');
@@ -34,7 +34,7 @@ app.get(['/info', '/status'], async (req, res, next) => {
 });
 
 /* Instatiate routes */
-app.use('/entity', entityRoute);
+app.use('/entities', entitiesRoute);
 
 app.all('*', (req, res, next) => {
   next(new NotFoundError());

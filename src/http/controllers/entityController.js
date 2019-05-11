@@ -36,3 +36,21 @@ const findById = async (req, res, next) => {
 };
 
 exports.findById = findById;
+
+/**
+ * Pega todos os dados das entidades.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+const getAll = async (req, res, next) => {
+  try {
+    const entities = await entityService.getAll();
+    res.send(entities);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getAll = getAll;
