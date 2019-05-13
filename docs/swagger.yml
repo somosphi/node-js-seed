@@ -1,0 +1,85 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Node Seed Project
+  description: |
+    Seed Project Microservice Backend
+    Produção: api.exemplo.com/projeto
+    Desenvolvimento: api.dev.exemplo.com/projeto
+
+host: api.dev.exemplo.com
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /entity:
+    post:
+      summary: Cria uma entidade caso não exista
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Entidade a ser cadastrada"
+          required: true
+          schema:
+            $ref: '#/definitions/entityCreate'
+      responses:
+        200:
+          description: Objeto de retorno
+          schema:
+            type: object
+            $ref: '#/definitions/entity'
+
+  /entity/{entityId}:
+    get:
+      summary: Retorna uma entidade
+      parameters:
+        - in: path
+          name: entityId
+          schema:
+            type: integer
+          required: true
+          description: ID número da entidade
+      responses:
+        200:
+          description: Objeto de retorno
+          schema:
+            type: object
+            $ref: '#/definitions/entity'
+
+
+definitions:
+  documentType:
+    type: string
+    description: Tipos de documentos
+    enum:
+      - CPF
+      - CNPJ
+
+  entityCreate:
+    type: object
+    required:
+      - name
+      - documentNumber
+      - documentType
+    properties:
+      name:
+        type: string
+      documentNumber:
+        type: string
+      documentType:
+        $ref: '#/definitions/documentType'
+
+  entity:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      documentNumber:
+        type: string
+      documentType:
+        $ref: '#/definitions/documentType'

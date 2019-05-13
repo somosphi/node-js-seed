@@ -1,0 +1,7 @@
+apps:
+  - script: 'src/index.js'
+    name: 'serviceName'
+    exec_mode: 'cluster'
+    wait_ready: true
+    instances: 1
+    kill_timeout: 10000

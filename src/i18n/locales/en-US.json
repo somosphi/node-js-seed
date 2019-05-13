@@ -1,0 +1,12 @@
+{
+  "http.started": "Http started on port %s",
+  "knex.migrate": "Start knex migration",
+  "eureka.started": "Eureka started",
+  "eureka.error": "Eureka error: %s",
+  "worker.started": "Worker started %s crons",
+  "error.notFound": "Page not found",
+  "error.resourceNotFound": "Resource not found",
+  "error.unexpected": "Internal server failure",
+  "error.validation": "Invalid request data",
+  "error.duplicatedResource": "Already exists resource with received unique keys"
+}
