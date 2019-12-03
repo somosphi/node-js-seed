@@ -1,6 +1,6 @@
 const Cron = require('../Cron');
 const { entityService } = require('../../container');
-const logger = require('../../logger');
+const { logger } = require('../../logger');
 
 const fetchEntitiesCron = new Cron('* * * * *', async () => {
   try {

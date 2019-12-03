@@ -1,8 +1,6 @@
 {
 	"http.started": "Http iniciado na porta %s",
 	"knex.migrate": "Iniciado migração do knex",
-	"eureka.started": "Eureka iniciado",
-	"eureka.error": "Eureka falha: %s",
 	"worker.started": "Worker iniciado com %s crons",
 	"error.notFound": "Página não encontrada",
 	"error.resourceNotFound": "Recurso não encontrado",

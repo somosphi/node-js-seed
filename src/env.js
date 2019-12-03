@@ -17,9 +17,6 @@ module.exports = {
   HOSTNAME: process.env.HOSTNAME,
   SERVICE_URL: process.env.SERVICE_URL,
   SERVICE_NAME: process.env.SERVICE_NAME,
-  AUTHORIZATION_SERVER: process.env.AUTHORIZATION_SERVER,
-  EUREKA_HOST: process.env.EUREKA_HOST,
-  EUREKA_PORT: parseInt(process.env.EUREKA_PORT, 10),
   APM_URL: process.env.APM_URL,
   APM_TOKEN: process.env.APM_TOKEN,
 

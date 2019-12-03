@@ -17,9 +17,6 @@ build-development:
     - echo "NODE_ENV=production" >> .env
     - echo "SERVICE_URL=${RANCHER_SERVICE}.${RANCHER_STACK}" >> .env
     - echo "SERVICE_NAME=${RANCHER_SERVICE}" >> .env
-    - echo "AUTHORIZATION_SERVER=${AUTHORIZATION_SERVER}" >> .env
-    - echo "EUREKA_HOST=${EUREKA_HOST}" >> .env
-    - echo "EUREKA_PORT=${EUREKA_PORT}" >> .env
     - echo "APM_URL=${APM_URL}" >> .env
     - echo "APM_TOKEN=${APM_TOKEN}" >> .env
     # Settings

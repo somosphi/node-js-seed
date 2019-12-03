@@ -1,45 +1,16 @@
-const winston = require('winston');
-const moment = require('moment-timezone');
+const { init } = require('@somosphi/logger');
 
 const {
-  combine, splat, colorize, printf,
-} = winston.format;
+  AxiosLogger,
+  ExpressLogger,
+  Logger,
+} = init({
+  PROJECT_NAME: 'node-js-seed',
+  OMIT_ROUTES: ['/status', '/info'],
+});
 
-/**
- * @param {*} err
- * @return {String}
- */
-const getErrorMessage = (err) => {
-  if (!err.request) {
-    return err.message;
-  }
-
-  const data = {
-    url: err.request._currentUrl,
-    method: err.config.method.toUpperCase(),
-    reqData: err.config.data,
-    resData: err.response ? err.response.data : null,
-    status: err.response ? err.response.status : null,
-  };
-
-  const message = Object.keys(data)
-    .filter(key => !!data[key])
-    .map(key => `${key}=${JSON.stringify(data[key])}`)
-    .join(' ');
-
-  return `${err.message} ${message}`;
+module.exports = {
+  axiosLogger: AxiosLogger,
+  expressLogger: ExpressLogger,
+  logger: Logger,
 };
-
-const customFormat = printf((info) => {
-  const message = info instanceof Error ? getErrorMessage(info) : info.message;
-  return `[${moment(info.timestamp)
-    .utc()
-    .format('YYYY-MM-DD HH:mm:ss')}] ${info.level}: ${message}`;
-});
-
-const logger = winston.createLogger({
-  format: combine(splat(), colorize(), customFormat),
-  transports: [new winston.transports.Console({})],
-});
-
-module.exports = logger;

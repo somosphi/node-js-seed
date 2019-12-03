@@ -5,7 +5,7 @@ const { placeholderIntegration } = require('../integrations');
 /**
  * @param {import('../index').ContainerContext} context
  */
-const entityServiceProvider = ({ database }) => {
+const entityService = ({ database }) => {
   /**
    * @typedef WriteEntityDto
    * @type {Object}
@@ -99,4 +99,4 @@ const entityServiceProvider = ({ database }) => {
   };
 };
 
-module.exports = entityServiceProvider;
+module.exports = entityService;
