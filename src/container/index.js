@@ -3,8 +3,8 @@ const knexFile = require('../../knexfile');
 const logger = require('../logger');
 const { NODE_ENV } = require('../env');
 
-/** Services Providers */
-const entityServiceProvider = require('./providers/entityServiceProvider');
+/** Services */
+const entityService = require('./services/entityService');
 
 const database = knex(knexFile);
 if (NODE_ENV === 'development') {
