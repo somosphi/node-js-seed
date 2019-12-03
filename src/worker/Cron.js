@@ -1,5 +1,5 @@
 const { CronJob } = require('cron');
-const logger = require('../logger');
+const { logger } = require('../logger');
 
 class Cron extends CronJob {
   /**

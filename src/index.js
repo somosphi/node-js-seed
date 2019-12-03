@@ -2,7 +2,7 @@ const apm = require('elastic-apm-node');
 const env = require('./env');
 const http = require('./http');
 const worker = require('./worker');
-const logger = require('./logger');
+const { logger } = require('./logger');
 
 /* start service */
 setImmediate(() => {

@@ -1,6 +1,6 @@
 const knex = require('knex');
 const knexFile = require('../../knexfile');
-const logger = require('../logger');
+const { logger } = require('../logger');
 const { NODE_ENV } = require('../env');
 
 /** Services */
@@ -35,5 +35,5 @@ const context = {
 };
 
 module.exports = {
-  entityService: entityServiceProvider(context),
+  entityService: entityService(context),
 };

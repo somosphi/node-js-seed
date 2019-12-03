@@ -5,7 +5,7 @@ const {
   ValidationError,
 } = require('../../errors');
 
-const logger = require('../../logger');
+const { logger } = require('../../logger');
 
 /**
  * @typedef ErrorConfig
