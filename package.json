@@ -22,6 +22,7 @@
   "author": "4All Tecnologia EPP",
   "license": "MIT",
   "dependencies": {
+    "@4alltecnologia/http-errors": "^1.1.0",
     "@fnando/cnpj": "^0.1.1",
     "@fnando/cpf": "^0.1.1",
     "@somosphi/logger": "^1.2.10",
