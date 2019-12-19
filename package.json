@@ -9,7 +9,7 @@
     "stop": "pm2 stop process.yml",
     "restart": "pm2 restart process.yml",
     "dev": "nodemon src/index.js",
-    "test": "npm run lint && npm run test:unit && npm run test:integration",
+    "test": "npm run test:unit && npm run test:integration",
     "test:unit": "mocha --opts test/unit/mocha.opts 'test/unit/**/*.js'",
     "test:integration": "mocha --opts test/integration/mocha.opts 'test/integration/**/*.js'",
     "lint": "eslint src test",
